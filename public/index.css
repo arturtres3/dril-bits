@@ -1,7 +1,10 @@
+
 body {
   background-image: url(dril.jpg);
   text-align: center;
   position: relative;
+  width: 90%;
+  margin: auto;
 }
 
 h1 {
@@ -15,10 +18,10 @@ h1 {
 }
 
 ul {
-  margin-top: 10%;
+  margin-top: 8%;
   list-style: none;
   padding: 0;
-  bottom: 0;
+  position: sticky;
 }
 
 li{
@@ -51,6 +54,26 @@ a li:hover{
 
 }
 
+.about{
+  text-align: left;
+  font-family: sans-serif;
+  margin: auto;
+  background-color: white;
+  padding: 2% 3%;
+  width: 40%;
+  border-radius: 10px;
+  border: 0.5px solid #00aced;
+  margin-bottom: 30px;
+}
+
+p{
+  width: 100%;
+}
+#button{
+  margin-bottom: 30px;
+}
+
+
 #next{
   font-family: sans-serif;
   padding: 10px;
@@ -59,7 +82,7 @@ a li:hover{
   user-select: none;
   font-size: 25px;
   color: #00aced;
-
+  margin: 5px;
 }
 #next:hover {
   background-color: #00aced;
@@ -67,7 +90,12 @@ a li:hover{
   -webkit-text-stroke: 0.1px white;
 }
 
-
+@media screen and (max-width: 700px){
+  .about{
+    width: 70%;
+    font-size: 12px;
+  }
+}
 @media screen and (max-width: 400px){
   li{
     font-size: 15px;
@@ -75,5 +103,9 @@ a li:hover{
   }
   ul {
     margin-top: 15%;
+  }
+  .about{
+    padding: 3%;
+    width: 95%;
   }
 }

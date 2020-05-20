@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="msapplication-navbutton-color" content="#EFE">
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Example">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <link rel="icon" type="image/jpg" sizes="32x32" href="dril.jpg">
+    <link rel="icon" type="image/jpg" sizes="96x96" href="dril.jpg">
+    <link rel="icon" type="image/jpg" sizes="16x16" href="dril.jpg">
+
+    <title>Dril bits</title>
+
+    <link rel="stylesheet" type="text/css" href="/index.css">
+    <script src="index.js"></script>
+
+
+
+  </head>
+
+  <body>
+    <a href="/"><h1>Dril bits</h1></a>
+
+    <div class="about">
+      <p>Get a random <a href="https://twitter.com/dril?s=20">@dril</a> tweet</p>
+      <p>Since there's no way you've read all 9,891 of them, this is a way of seeing "fresh" posts when you fall down the rabbit hole.</p>
+      <p>I cannot believe that something like this doesn't already exist,
+         so if you know a better version of this please send me.</p>
+      <p>This is not up to date, it takes the links from a static file,
+         because I'm too lazy to learn how to deal with twitter APIs. The latest tweet
+          is <a target="_blank" href="http://twitter.com/dril/status/1261063616054231041">this one</a>,
+           which is from May 14, 2020. I just took the tweets from
+           <a target="_blank" href="https://cooltweets.herokuapp.com/dril">this page</a>,
+            and put them in a JSON.</p>
+      <p>It includes retweets and replys too, so not every tweet was written by @dril</p>
+      <p>If you want to do some data analysis on dril tweets, or anything like that,
+         you can get all the tweets in here as a JSON file with the text, the date and the link
+          for the each tweet. It looks like this:</p>
+      <p>{<br>&emsp;"text": "no",<br>&emsp;"link": "http://twitter.com/dril/status/922321981",<br>&emsp;"date": "\nSep 15, 2008 10:25:20 AM\n"<br>}</p>
+      <a href="/DownloadJSON">Download JSON</a>
+      <p>Contact: arturtres3@gmail.com</p>
+    </div>
+    <div id="button">
+      <a id="next" href="/">back</a>
+    </div>
+
+
+
+  </body>
+</html>
