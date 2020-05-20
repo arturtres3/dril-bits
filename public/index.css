@@ -31,9 +31,10 @@ li{
   display: inline;
   margin: 0 10px;
   background-color: white;
-  padding: 4px;
+  padding: 5px;
   border-radius: 5px;
   user-select: none;
+  border: 0.5px solid #d3d3d3;
 }
 a{
   text-decoration: none;
@@ -43,6 +44,7 @@ li:hover{
   background-color: #00aced;
   cursor: pointer;
   -webkit-text-stroke: 0.1px white;
+  border: 0px solid #d3d3d3;
 }
 a li:hover{
   -webkit-text-stroke: 0.1px white;
@@ -75,18 +77,20 @@ p{
 
 #next{
   font-family: sans-serif;
-  padding: 10px;
+  padding: 8px;
   background-color: white;
   border-radius: 5px;
   user-select: none;
   font-size: 25px;
   color: #00aced;
   margin: 5px;
+  border: 0.5px solid #d3d3d3;
 }
 #next:hover {
   background-color: #00aced;
   cursor: pointer;
   -webkit-text-stroke: 0.1px white;
+  border: 0px solid #d3d3d3;
 }
 
 @media screen and (max-width: 700px){
