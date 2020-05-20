@@ -1,6 +1,7 @@
 body {
   background-image: url(dril.jpg);
   text-align: center;
+  position: relative;
 }
 
 h1 {
@@ -10,7 +11,38 @@ h1 {
   color: #00aced;
   -webkit-text-stroke: 1px white;
   font-weight: bolder;
-  //text-shadow: 3px 3px white;
+  font-family: sans-serif;
+}
+
+ul {
+  margin-top: 10%;
+  list-style: none;
+  padding: 0;
+  bottom: 0;
+}
+
+li{
+  font-size: 25px;
+  color: #00aced;
+  font-family: sans-serif;
+  display: inline;
+  margin: 0 10px;
+  background-color: white;
+  padding: 4px;
+  border-radius: 5px;
+  user-select: none;
+}
+a{
+  text-decoration: none;
+}
+
+li:hover{
+  background-color: #00aced;
+  cursor: pointer;
+  -webkit-text-stroke: 0.1px white;
+}
+a li:hover{
+  -webkit-text-stroke: 0.1px white;
 }
 
 .twitter-tweet{
@@ -24,9 +56,17 @@ h1 {
   padding: 10px;
   background-color: white;
   border-radius: 5px;
+  user-select: none;
 
 }
 #next:hover {
-  background-color: red;
+  background-color: #00aced;
   cursor: pointer;
+}
+
+
+@media screen and (max-width: 400px){
+  li{
+    font-size: 20px;
+  }
 }
