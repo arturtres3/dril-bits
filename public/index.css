@@ -1,0 +1,32 @@
+body {
+  background-image: url(dril.jpg);
+  text-align: center;
+}
+
+h1 {
+  text-align: center;
+  margin: 40px auto;
+  font-size: 60px;
+  color: #00aced;
+  -webkit-text-stroke: 1px white;
+  font-weight: bolder;
+  //text-shadow: 3px 3px white;
+}
+
+.twitter-tweet{
+  margin: auto;
+  margin-bottom: 50px;
+
+}
+
+#next{
+  font-family: sans-serif;
+  padding: 10px;
+  background-color: white;
+  border-radius: 5px;
+
+}
+#next:hover {
+  background-color: red;
+  cursor: pointer;
+}
