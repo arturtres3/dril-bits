@@ -57,11 +57,14 @@ a li:hover{
   background-color: white;
   border-radius: 5px;
   user-select: none;
+  font-size: 25px;
+  color: #00aced;
 
 }
 #next:hover {
   background-color: #00aced;
   cursor: pointer;
+  -webkit-text-stroke: 0.1px white;
 }
 
 
