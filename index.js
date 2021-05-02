@@ -1,5 +1,7 @@
 const express = require('express');
 const path = require('path');
+const getNewTweets = require('./server/twitter');
+
 
 var tweets = require(path.join(__dirname, 'public/dril.json'));
 
@@ -14,6 +16,8 @@ app.get('/', (req, res) => {
 app.get('/About', (req, res) => {
     res.render('about.ejs');
   });
+
+getNewTweets().then((data) => console.log(data)) //teste
 
 app.use(express.static(path.join(__dirname, 'public')));
 
