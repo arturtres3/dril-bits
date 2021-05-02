@@ -17,7 +17,6 @@ app.get('/About', (req, res) => {
     res.render('about.ejs');
   });
 
-getNewTweets().then((data) => console.log(data)) //teste
 
 app.use(express.static(path.join(__dirname, 'public')));
 

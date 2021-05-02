@@ -14,7 +14,7 @@ module.exports = (app, tweets) => {
   app.get('/Download', (req, res) => {
     var txt = "";
     tweets.forEach(tweet => {
-      txt = txt + tweet.text + tweet.date + tweet.link + edge;
+      txt = txt + tweet.text + "\n"+ tweet.date + "\nhttp://twitter.com/dril/status/" + tweet.id + edge;
     });
     var filename = 'dril.txt';
     var mimetype = 'text/plain';
