@@ -2,9 +2,7 @@ const express = require('express');
 const path = require('path');
 const getNewTweets = require('./server/twitter');
 
-
 var tweets = require(path.join(__dirname, 'public/dril.json'));
-
 const app = express();
 
 require('./server/')(app, tweets);
@@ -16,6 +14,10 @@ app.get('/', (req, res) => {
 app.get('/About', (req, res) => {
     res.render('about.ejs');
   });
+
+app.get('/next', (req, res) => {
+  res.send(tweets[Math.ceil(Math.random() * tweets.length)]);
+});
 
 
 app.use(express.static(path.join(__dirname, 'public')));

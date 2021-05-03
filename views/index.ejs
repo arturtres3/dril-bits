@@ -18,23 +18,24 @@
     <title>Dril bits</title>
 
     <link rel="stylesheet" type="text/css" href="/index.css">
-    <script src="index.js"></script>
-
 
 
   </head>
 
   <body>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     <h1>Dril bits</h1>
 
-    <blockquote class="twitter-tweet">
-      <a href=<%= "http://twitter.com/dril/status/" + tweet.id %>></a>
-    </blockquote>
-    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
+    <div id="tweet-container">
+      <blockquote class="twitter-tweet">
+        <a href=<%= "http://twitter.com/dril/status/" + tweet.id %>></a>
+      </blockquote>
+    </div>
+    
     <br>
 
-    <a id="next" onclick="window.location.reload();">Another one</a>
+    <!--<a id="next" onclick="window.location.reload();">Another one</a> -->
+    <a id="next">Another one</a>
 
     <ul>
       <a href="/About"><li>About</li></a>
@@ -42,6 +43,6 @@
       <!--<a target="_blank" href="https://cooltweets.herokuapp.com/dril"><li>All Tweets</li><a/> -->
     </ul>
 
-
+    <script src="index.js"></script>
   </body>
 </html>
