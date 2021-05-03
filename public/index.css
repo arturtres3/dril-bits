@@ -47,7 +47,7 @@ li:hover{
   border: 0px solid #d3d3d3;
 }
 a li:hover{
-  -webkit-text-stroke: 0.1px white;
+  -webkit-text-stroke: 0.3px white;
 }
 
 .twitter-tweet{
@@ -89,7 +89,7 @@ p{
 #next:hover {
   background-color: #00aced;
   cursor: pointer;
-  -webkit-text-stroke: 0.1px white;
+  -webkit-text-stroke: 0.4px white;
   border: 0px solid #d3d3d3;
 }
 

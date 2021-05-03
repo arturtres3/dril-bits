@@ -29,18 +29,16 @@
 
     <div class="about">
       <p>Get a random <a href="https://twitter.com/dril?s=20">@dril</a> tweet</p>
-      <p>Since there's no way you've read all 9,891 of them, this is a way of seeing "fresh" posts when you fall down the rabbit hole.</p>
-      <p>This is not up to date, it takes the links from a static file,
-         because I'm too lazy to learn how to deal with twitter APIs. The latest tweet
-          is <a target="_blank" href="http://twitter.com/dril/status/1271215850536579074">this one</a>,
-           which is from June 11, 2020. I just took the tweets from
+      <p>Out of 10 years and 10k+ posts, you can always find some hidden gems that had slipped under the radar.</p>
+      <p>This is mostly up to date. I took most tweets from
            <a target="_blank" href="https://cooltweets.herokuapp.com/dril">this page</a>,
-            and put them in a JSON.</p>
+            but if you're not seeing the latest posts just click <a href="/UpdateTweets">here</a> 
+            and they <i>should</i> be added to the pool.</p>
       <p>It includes retweets and replys too, so not every tweet was written by @dril</p>
-      <p>If you want to do some data analysis on dril tweets, or anything like that,
-         you can get all the tweets in here as a JSON file with the text, the date and the link
-          for the each tweet. It looks like this:</p>
-      <p>{<br>&emsp;"text": "no",<br>&emsp;"link": "http://twitter.com/dril/status/922321981",<br>&emsp;"date": "\nSep 15, 2008 10:25:20 AM\n"<br>}</p>
+      <p>If you want to do data analysis on dril tweets, or something like that,
+         you can get all the tweets in here as a JSON file with the text, the date and the id
+          for each tweet. It looks like this:</p>
+      <p>{<br>&emsp;"text": "no",<br>&emsp;"id": "922321981",<br>&emsp;"date": "Mon, 15 Sep 2008 13:25:20 GMT"<br>}</p>
       <a href="/DownloadJSON">Download JSON</a>
 
     </div>
