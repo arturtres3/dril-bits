@@ -9,7 +9,7 @@ document.addEventListener('keyup', function (event) {
 
     if (key === 'Enter' || key === 13) {
         //window.location.reload();
-        next.event('click')
+        next.click()
     }
 });
 
