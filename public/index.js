@@ -8,7 +8,7 @@ document.addEventListener('keyup', function (event) {
     var key = event.key || event.keyCode;
 
     if (key === 'Enter' || key === 13) {
-        window.location.reload();
+        //window.location.reload();
         next.event('click')
     }
 });
