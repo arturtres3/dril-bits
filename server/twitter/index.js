@@ -9,8 +9,8 @@ const fileNameTweets = path.join(__dirname, '../../public/dril.json');
 const tweets = require(fileNameTweets);
 
 const client = new Twitter({
-    consumer_key: process.env.TWITTER_CONSUMER_KEY,
-    consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+    //consumer_key: process.env.TWITTER_CONSUMER_KEY,
+    //consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
     bearer_token: process.env.TWITTER_BEARER_TOKEN
   });
 
@@ -75,6 +75,8 @@ async function UpdateJSON(){
 }
 
 module.exports = async (app) => {
+
+  await UpdateJSON().then()
 
     app.get('/UpdateTweets', async (req, res) => {
         await UpdateJSON().then()
