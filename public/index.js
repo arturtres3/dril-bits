@@ -8,11 +8,11 @@ document.addEventListener('keyup', function (event) {
     var key = event.key || event.keyCode;
 
     if (key === 'Enter' || key === 13) {
-        //window.location.reload();
         next.click()
     }
 });
 
+// recebe um novo tweet da rota /next (funcao copiada)
 function httpGetAsync(theUrl, callback)
 {
     var xmlHttp = new XMLHttpRequest();
@@ -24,9 +24,12 @@ function httpGetAsync(theUrl, callback)
     xmlHttp.send(null);
 }
 
+
 const container = document.getElementById('tweet-container')
+
 next.addEventListener('click', () => {
     httpGetAsync('/next', (data) =>{
+        // deleta o elemento atual, coloca um novo e recarrega o embedded do twitter
         const blockquote = document.createElement('blockquote')
         const next_a = document.createElement('a')
         const next_id = JSON.parse(data).id
@@ -42,8 +45,5 @@ next.addEventListener('click', () => {
 
     }) 
 })
-
-  //twttr.widgets.load(document.getElementById('tweet-container'))
-
 
 
