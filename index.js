@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const getNewTweets = require('./server/twitter');
+//const Twitter = require('./server/twitter');
 
 var tweets = require(path.join(__dirname, 'public/dril.json'));
 const app = express();
