@@ -13,6 +13,7 @@ const client = new Twitter({
     bearer_token: process.env.TWITTER_BEARER_TOKEN
   });
 
+// Faz request de todos os tweets desde o ultimo do arquivo
 async function getNewTweets(){
     let allData = []
     let last_id = tweets[0].id
@@ -53,6 +54,7 @@ async function getNewTweets(){
     }
 }
 
+// Chama getNewTweets e coloca os novos no inicio do arquivo dril.json
 async function UpdateJSON(){
     const data = await getNewTweets()
 
@@ -73,50 +75,55 @@ async function UpdateJSON(){
 
 }
 
-
-const checkDeleted = async () => {
-  let count = 0
-  let ids_str = "1119383548111261696" //so pra nao ficar a virgula no inicio
+// retorna lista com ids de tweets deletados (ou invalidos por algum motivo)
+const getAllDeleted = async (list_ids) => {
+  let counter = 0
   let deleted_tweets = []
 
+  while(counter < list_ids.length){
+    
+    let response = await client.get('tweets', {
+      ids: list_ids[counter],
+    })
+
+    if(response != undefined && response.errors != undefined){
+      response.errors.forEach(error_tweet => {
+        deleted_tweets.push(error_tweet.value)
+      })
+    }
+
+    counter++
+  }
+
+  return deleted_tweets
+}
+
+// atualiza arquivo de tweets indisponiveis
+const checkDeleted = async () => {
+  let count = 1
+  let ids_str = "1119383548111261696" //so pra nao ficar a virgula no inicio
+  let all_ids = []
+
   tweets.forEach(tweet => {
-    if(count < 99){
+    if(count < 100){
       ids_str = ids_str + ',' + tweet.id
       count++
     }else{
-      await (async () => {
-        
-        response = await client.get('tweets', {
-          ids: ids_str,
-        })
-        
-        if(response.errors != undefined){
-          response.errors.forEach(error_tweet => {
-            const item = new Object()
-            item.id = error_tweet.value
-            deleted_tweets.push(item)
-          })
-        }
-        console.log(deleted_tweets.length)
-      })()
-      .catch(error => {
-        console.log("error fetching tweets: " + error)
-      })
-
+      all_ids.push(ids_str)
       ids_str = tweet.id
       count = 1
     }
   })
+  all_ids.push(ids_str) // cada string com 100 ids separados por virgula 
   
-  console.log(deleted_tweets)
-  
-  fs.writeFile(fileNameDeletedTweets, JSON.stringify(deleted_tweets), function writeJSON(err) {
-    if (err) return console.log(err);
-    console.log('writing to ' + fileNameDeletedTweets);
+  let deletedTweets = await getAllDeleted(all_ids).catch(error => {
+    console.log("error fetching tweets: " + error)
   })
-    
   
-  
+  fs.writeFile(fileNameDeletedTweets, JSON.stringify(deletedTweets), function writeJSON(err) {
+    if (err) return console.log(err);
+    console.log(`writing ${deletedTweets.length} ids to ${fileNameDeletedTweets}`);
+  })
 
 }
 
@@ -127,21 +134,19 @@ const updateRoute = async (app) => {
   )
 }
 
+const updateDeletedRoute = async (app) => {
+  app.get('/UpdateDeleted', async (req, res) => {
+    await checkDeleted().then()
+    res.redirect("/")}
+  )
+}
+
+// Para executar ao comecar o servidor
 exports.updateFunc = UpdateJSON
 
+// Rota para atualizar os tweets
 exports.updateRoute = updateRoute
 
-exports.deletedTweets = checkDeleted
+// Rota para atualizar os deletados
+exports.deletedTweets = updateDeletedRoute
 
-
-// module.exports = async (app) => {
-
-//   //await checkDeleted().then()
-
-//   await UpdateJSON().then()
-
-//   app.get('/UpdateTweets', async (req, res) => {
-//       await UpdateJSON().then()
-//       res.redirect("/")
-//   });
-//}
