@@ -29,20 +29,17 @@ const container = document.getElementById('tweet-container')
 
 next.addEventListener('click', () => {
     httpGetAsync('/next', (data) =>{
-        // deleta o elemento atual, coloca um novo e recarrega o embedded do twitter
-        const blockquote = document.createElement('blockquote')
-        const next_a = document.createElement('a')
-        const next_id = JSON.parse(data).id
-        blockquote.className = 'twitter-tweet'
-        next_a.href = 'http://twitter.com/dril/status/' + next_id
+        const newTweet = document.createElement('blockquote')
+        newTweet.className = 'twitter-tweet'
 
-        blockquote.appendChild(next_a)
-
-        container.children[0].remove()
-        container.appendChild(blockquote)
+        const linkNewTweet = document.createElement('a')
+        linkNewTweet.href = 'http://twitter.com/dril/status/' + JSON.parse(data).id
+        newTweet.appendChild(linkNewTweet)
+    
+        Array.from(container.children).forEach( oldTweet => {oldTweet.remove()} )  
+        container.appendChild(newTweet)
         
         twttr.widgets.load(container)
-
     }) 
 })
 
