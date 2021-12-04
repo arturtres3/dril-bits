@@ -1,10 +1,12 @@
 const next = document.getElementById('next')
+const back = document.getElementById('back')
 const container = document.getElementById('tweet-container')
 
-let history = []
+let history = new History()
 
 window.onload = () => {
-    //history.push(container.children[0].children[0].href.replace("http://twitter.com/dril/status/", ""));
+    //history.unshift(container.children[0].children[0].dataset.tweetId)
+    history.add(container.children[0].children[0].href.replace("http://twitter.com/dril/status/", ""));
 }
 
 
@@ -15,8 +17,11 @@ document.addEventListener('keyup', function (event) {
 
     var key = event.key || event.keyCode;
 
-    if (key === 'Enter' || key === 13) {
+    if (key === 'Enter' || key === 13){
         next.click()
+    }
+    if (key === 'Backspace' || key === 8){
+        back.click()
     }
 });
 
@@ -47,15 +52,32 @@ function loadNewTweet(novoId) {
 }
 
 next.addEventListener('click', () => {
-    httpGetAsync('/next', (nextTweet) => { 
-        const id = JSON.parse(nextTweet).id
-
-        console.log(container.children[0].children[0].dataset.tweetId)
-        loadNewTweet(id) 
+    if(history.isOnTop()){
+        httpGetAsync('/next', (nextTweet) => { 
+            const id = JSON.parse(nextTweet).id
+            loadNewTweet(id) 
+            history.add(id)
+            //console.log(history.getList())
+        })
         
-        history.push(id)
-        //console.log(history)
-    })
+    }else{ 
+        loadNewTweet(history.goForward())
+        if(history.isOnTop())
+            next.innerHTML = "Another one"
+    }
+    back.classList.remove("disable")
+    
+})
+
+back.addEventListener('click', () => {
+    if(!history.isOnEnd()){
+        loadNewTweet(history.goBack())
+        if(history.isOnEnd())
+            back.classList.add("disable")
+        next.innerHTML = "Next"
+    }else{
+
+    }
 })
 
 

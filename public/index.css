@@ -17,7 +17,7 @@ h1 {
   font-family: sans-serif;
 }
 
-ul {
+#buttons {
   margin-top: 4%;
   list-style: none;
   padding: 0;
@@ -35,7 +35,7 @@ li{
   border-radius: 5px;
   user-select: none;
   border: 0.5px solid #d3d3d3;
-}
+} 
 a{
   text-decoration: none;
 }
@@ -75,7 +75,7 @@ p{
 }
 
 
-#next{
+.control{
   font-family: sans-serif;
   padding: 8px;
   background-color: white;
@@ -86,11 +86,21 @@ p{
   margin: 5px;
   border: 0.5px solid #d3d3d3;
 }
-#next:hover {
+.control:hover {
   background-color: #00aced;
   cursor: pointer;
   -webkit-text-stroke: 0.4px white;
   border: 0px solid #d3d3d3;
+}
+
+.disable{
+  color: #d3d3d3;
+}
+.disable:hover{
+  background-color: white;
+  cursor: default;
+  -webkit-text-stroke: 0px white;
+  border: 0.5px solid #d3d3d3;
 }
 
 @media screen and (max-width: 700px){
