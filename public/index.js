@@ -5,7 +5,7 @@ const container = document.getElementById('tweet-container')
 let history = new History()
 
 window.onload = () => {
-    //history.unshift(container.children[0].children[0].dataset.tweetId)
+    // salva o primeiro id
     history.add(container.children[0].children[0].href.replace("http://twitter.com/dril/status/", ""));
 }
 
@@ -15,7 +15,7 @@ document.addEventListener('keyup', function (event) {
         return;
     }
 
-    var key = event.key || event.keyCode;
+    let key = event.key || event.keyCode;
 
     if (key === 'Enter' || key === 13){
         next.click()
@@ -23,7 +23,8 @@ document.addEventListener('keyup', function (event) {
     if (key === 'Backspace' || key === 8){
         back.click()
     }
-});
+
+})
 
 // recebe um novo tweet da rota /next (funcao copiada)
 function httpGetAsync(theUrl, callback)
@@ -47,7 +48,7 @@ function loadNewTweet(novoId) {
     
     Array.from(container.children).forEach( oldTweet => {oldTweet.remove()} )  
     container.appendChild(newTweet)
-        
+    
     twttr.widgets.load(container)
 }
 
@@ -57,26 +58,25 @@ next.addEventListener('click', () => {
             const id = JSON.parse(nextTweet).id
             loadNewTweet(id) 
             history.add(id)
-            //console.log(history.getList())
         })
-        
-    }else{ 
+    }
+    else{ 
         loadNewTweet(history.goForward())
         if(history.isOnTop())
             next.innerHTML = "Another one"
     }
+
     back.classList.remove("disable")
-    
 })
 
 back.addEventListener('click', () => {
     if(!history.isOnEnd()){
         loadNewTweet(history.goBack())
+
         if(history.isOnEnd())
             back.classList.add("disable")
-        next.innerHTML = "Next"
-    }else{
 
+        next.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Next &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
     }
 })
 

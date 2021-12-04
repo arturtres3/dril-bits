@@ -1,50 +1,66 @@
 
 body {
   background-image: url(dril.jpg);
-  text-align: center;
   position: relative;
-  width: 90%;
+  text-align: center;
   margin: auto;
+  font-family: sans-serif;
+  overflow: overlay;
 }
+
 
 h1 {
   text-align: center;
-  margin: 40px auto;
+  margin: 10px auto 20px auto;
   font-size: 60px;
   color: #00aced;
   -webkit-text-stroke: 1px white;
   font-weight: bolder;
-  font-family: sans-serif;
 }
 
-#buttons {
-  margin-top: 4%;
-  list-style: none;
+
+#navbar{
+  list-style-type: none;
+  text-align: left;
+  margin: 0;
   padding: 0;
-  position: sticky;
+  overflow: hidden;
 }
-
-li{
-  font-size: 25px;
+#navbar li{
+  float: left;
+}
+#navbar li a {
+  background-color: rgba(255, 255, 255, 0.267);
+  border-right: 3px solid white;
+  font-weight: bolder;
+  display: block;
+  -webkit-text-stroke: 0.1px white;
   color: #00aced;
-  font-family: sans-serif;
-  display: inline;
-  margin: 0 10px;
-  background-color: white;
-  padding: 5px;
-  border-radius: 5px;
-  user-select: none;
-  border: 0.5px solid #d3d3d3;
-} 
-a{
+  font-size: 23px;
+  text-align: center;
+  padding: 12px 16px;
   text-decoration: none;
 }
+#navbar li a:hover {
+  background-color: rgba(255, 255, 255, 0.582);
+}
 
-li:hover{
-  background-color: #00aced;
-  cursor: pointer;
-  -webkit-text-stroke: 0.1px white;
-  border: 0px solid #d3d3d3;
+
+#buttons {
+  position: fixed;
+  bottom: 10%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  /*margin-top: 2%;*/
+  list-style: none;
+  padding: 0;
+  z-index: 100;
+}
+
+
+a{
+  text-decoration: none;
 }
 a li:hover{
   -webkit-text-stroke: 0.3px white;
@@ -52,8 +68,14 @@ a li:hover{
 
 .twitter-tweet{
   margin: auto;
-  margin-bottom: 50px;
 }
+#tweet-container{
+
+  margin: auto;
+  margin-bottom: 15%;
+  z-index: -1;
+}
+
 
 .about{
   text-align: left;
@@ -66,14 +88,9 @@ a li:hover{
   border: 0.5px solid #00aced;
   margin-bottom: 30px;
 }
-
 p{
   width: 100%;
 }
-#button{
-  margin-bottom: 30px;
-}
-
 
 .control{
   font-family: sans-serif;
@@ -89,24 +106,43 @@ p{
 .control:hover {
   background-color: #00aced;
   cursor: pointer;
-  -webkit-text-stroke: 0.4px white;
-  border: 0px solid #d3d3d3;
+  color: white;
 }
+
 
 .disable{
   color: #d3d3d3;
 }
 .disable:hover{
+  color: #d3d3d3;
   background-color: white;
   cursor: default;
   -webkit-text-stroke: 0px white;
   border: 0.5px solid #d3d3d3;
 }
 
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+
 @media screen and (max-width: 700px){
   .about{
     width: 70%;
     font-size: 12px;
+  }
+  #tweet-container{
+    width: 95%;
   }
 }
 @media screen and (max-width: 400px){

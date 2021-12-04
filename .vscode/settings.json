@@ -1,6 +1,11 @@
 {
     "editor.tokenColorCustomizations": {
-        "comments": "",
-        "textMateRules": []
-    }
+        /*"comments": "",*/
+        "textMateRules": [],
+    },
+    "workbench.colorCustomizations": {
+        "statusBar.background" : "#1A1A1A",
+        "statusBar.noFolderBackground" : "#212121",
+        "statusBar.debuggingBackground": "#263238"
+    },
 }
