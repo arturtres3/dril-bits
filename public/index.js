@@ -1,4 +1,12 @@
 const next = document.getElementById('next')
+const container = document.getElementById('tweet-container')
+
+let history = []
+
+window.onload = () => {
+    //history.push(container.children[0].children[0].href.replace("http://twitter.com/dril/status/", ""));
+}
+
 
 document.addEventListener('keyup', function (event) {
     if (event.defaultPrevented) {
@@ -24,23 +32,31 @@ function httpGetAsync(theUrl, callback)
     xmlHttp.send(null);
 }
 
+function loadNewTweet(novoId) {
+    const newTweet = document.createElement('blockquote')
+    newTweet.className = 'twitter-tweet'
 
-const container = document.getElementById('tweet-container')
+    const linkNewTweet = document.createElement('a')
+    linkNewTweet.href = 'http://twitter.com/dril/status/' + novoId
+    newTweet.appendChild(linkNewTweet)
+    
+    Array.from(container.children).forEach( oldTweet => {oldTweet.remove()} )  
+    container.appendChild(newTweet)
+        
+    twttr.widgets.load(container)
+}
 
 next.addEventListener('click', () => {
-    httpGetAsync('/next', (data) =>{
-        const newTweet = document.createElement('blockquote')
-        newTweet.className = 'twitter-tweet'
+    httpGetAsync('/next', (nextTweet) => { 
+        const id = JSON.parse(nextTweet).id
 
-        const linkNewTweet = document.createElement('a')
-        linkNewTweet.href = 'http://twitter.com/dril/status/' + JSON.parse(data).id
-        newTweet.appendChild(linkNewTweet)
-    
-        Array.from(container.children).forEach( oldTweet => {oldTweet.remove()} )  
-        container.appendChild(newTweet)
+        console.log(container.children[0].children[0].dataset.tweetId)
+        loadNewTweet(id) 
         
-        twttr.widgets.load(container)
-    }) 
+        history.push(id)
+        //console.log(history)
+    })
 })
+
 
 
