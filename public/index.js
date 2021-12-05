@@ -1,6 +1,7 @@
 const next = document.getElementById('next')
 const back = document.getElementById('back')
 const container = document.getElementById('tweet-container')
+const container_hidden = document.getElementById('tweet-hidden')
 
 let history = new History()
 
@@ -38,30 +39,40 @@ function httpGetAsync(theUrl, callback)
     xmlHttp.send(null);
 }
 
-function loadNewTweet(novoId) {
+function loadNewTweet(newId, location) {
     const newTweet = document.createElement('blockquote')
     newTweet.className = 'twitter-tweet'
 
     const linkNewTweet = document.createElement('a')
-    linkNewTweet.href = 'http://twitter.com/dril/status/' + novoId
+    linkNewTweet.href = 'http://twitter.com/dril/status/' + newId
     newTweet.appendChild(linkNewTweet)
     
-    Array.from(container.children).forEach( oldTweet => {oldTweet.remove()} )  
-    container.appendChild(newTweet)
+    Array.from(location.children).forEach( oldTweet => {oldTweet.remove()} )  
+    location.appendChild(newTweet)
     
-    twttr.widgets.load(container)
+    twttr.widgets.load(location)
 }
+
+function moveToContainer(){
+    Array.from(container.children).forEach( oldTweet => {oldTweet.remove()} )  
+    container.append(container_hidden.children[0])
+}
+
 
 next.addEventListener('click', () => {
     if(history.isOnTop()){
+        moveToContainer()
+
         httpGetAsync('/next', (nextTweet) => { 
             const id = JSON.parse(nextTweet).id
-            loadNewTweet(id) 
-            history.add(id)
+            loadNewTweet(id, container_hidden) 
+
+            history.add(container.children[0].children[0].dataset.tweetId)
         })
     }
     else{ 
-        loadNewTweet(history.goForward())
+        loadNewTweet(history.goForward(), container)
+        
         if(history.isOnTop())
             next.innerHTML = "Another one"
     }
@@ -71,7 +82,7 @@ next.addEventListener('click', () => {
 
 back.addEventListener('click', () => {
     if(!history.isOnEnd()){
-        loadNewTweet(history.goBack())
+        loadNewTweet(history.goBack(), container)
 
         if(history.isOnEnd())
             back.classList.add("disable")
