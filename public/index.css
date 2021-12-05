@@ -121,6 +121,10 @@ p{
   border: 0.5px solid #d3d3d3;
 }
 
+.hide{
+  display: none;
+}
+
 
 ::-webkit-scrollbar {
   width: 5px;

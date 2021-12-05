@@ -9,10 +9,12 @@ const tweets = allTweets.filter(tweet =>{return !deletedTweets.includes(tweet.id
 
 const app = express();
 
+function randTweet(){return tweets[Math.ceil(Math.random() * tweets.length)]}
+
 require('./server/')(app, tweets);
 
 app.get('/', (req, res) => {
-    res.render('index.ejs', {tweet: tweets[Math.ceil(Math.random() * tweets.length)]});
+    res.render('index.ejs', {tweet: randTweet(), tweet2: randTweet()});
   });
   
 app.get('/About', (req, res) => {
@@ -20,7 +22,7 @@ app.get('/About', (req, res) => {
   });
 
 app.get('/next', (req, res) => {
-  res.send(tweets[Math.ceil(Math.random() * tweets.length)]);
+  res.send(randTweet());
 });
 
 

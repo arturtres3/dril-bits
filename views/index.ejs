@@ -10,6 +10,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="Example">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="twitter:widgets:theme" content="light">
 
     <link rel="icon" type="image/jpg" sizes="32x32" href="dril.jpg">
     <link rel="icon" type="image/jpg" sizes="96x96" href="dril.jpg">
@@ -23,7 +24,7 @@
   </head>
 
   <body>
-    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8" id="twitter-wjs"></script>
     
     <ul id="navbar">
       <li> <a href="/About">About</a> </li>
@@ -35,6 +36,12 @@
     <div id="tweet-container">
       <blockquote class="twitter-tweet">
         <a href=<%= "http://twitter.com/dril/status/" + tweet.id %>></a>
+      </blockquote>
+    </div>
+
+    <div id="tweet-hidden" class="hide">
+      <blockquote class="twitter-tweet">
+        <a href=<%= "http://twitter.com/dril/status/" + tweet2.id %>></a>
       </blockquote>
     </div>
     
