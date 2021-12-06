@@ -1,3 +1,8 @@
+:root {
+  --main-color: #00aced;
+  --accent-color: white;
+  --disable-color: #d3d3d3;
+}
 
 body {
   background-image: url(dril.jpg);
@@ -13,8 +18,8 @@ h1 {
   text-align: center;
   margin: 10px auto 20px auto;
   font-size: 60px;
-  color: #00aced;
-  -webkit-text-stroke: 1px white;
+  color: var(--main-color);
+  -webkit-text-stroke: 1px var(--accent-color);
   font-weight: bolder;
 }
 
@@ -31,11 +36,11 @@ h1 {
 }
 #navbar li a {
   background-color: rgba(255, 255, 255, 0.267);
-  border-right: 3px solid white;
+  border-right: 3px solid var(--accent-color);
   font-weight: bolder;
   display: block;
-  -webkit-text-stroke: 0.1px white;
-  color: #00aced;
+  -webkit-text-stroke: 0.1px var(--accent-color);
+  color: var(--main-color);
   font-size: 23px;
   text-align: center;
   padding: 12px 16px;
@@ -75,11 +80,11 @@ a{
   text-align: left;
   font-family: sans-serif;
   margin: auto;
-  background-color: white;
+  background-color: var(--accent-color);
   padding: 2% 3%;
   width: 40%;
   border-radius: 10px;
-  border: 0.5px solid #00aced;
+  border: 0.5px solid var(--main-color);
   margin-bottom: 30px;
 }
 p{
@@ -89,17 +94,17 @@ p{
 .control{
   font-family: sans-serif;
   padding: 8px;
-  background-color: white;
+  background-color: var(--accent-color);
   border-radius: 5px;
   user-select: none;
   font-size: 25px;
-  color: #00aced;
+  color: var(--main-color);
   margin: 5px;
-  border: 0.5px solid #d3d3d3;
+  border: 0.5px solid var(--disable-color);
 }
 
 .disable{
-  color: #d3d3d3;
+  color: var(--disable-color);
 }
 
 
@@ -125,19 +130,19 @@ p{
   background-color: rgba(255, 255, 255, 0.582);
 }
 a li:active{
-  -webkit-text-stroke: 0.3px white;
+  -webkit-text-stroke: 0.3px var(--accent-color);
 }
 .control:active {
-  background-color: #00aced;
+  background-color: var(--main-color);
   cursor: pointer;
-  color: white;
+  color: var(--accent-color);
 }
 .disable:active{
-  color: #d3d3d3;
-  background-color: white;
+  color: var(--disable-color);
+  background-color: var(--accent-color);
   cursor: default;
-  -webkit-text-stroke: 0px white;
-  border: 0.5px solid #d3d3d3;
+  -webkit-text-stroke: 0px var(--accent-color);
+  border: 0.5px solid var(--disable-color);
 }
 
 @media (hover: hover) {
@@ -145,19 +150,19 @@ a li:active{
     background-color: rgba(255, 255, 255, 0.582);
   }
   a li:hover{
-    -webkit-text-stroke: 0.3px white;
+    -webkit-text-stroke: 0.3px var(--accent-color);
   }
   .control:hover {
-    background-color: #00aced;
+    background-color: var(--main-color);
     cursor: pointer;
-    color: white;
+    color: var(--accent-color);
   }
   .disable:hover{
-    color: #d3d3d3;
-    background-color: white;
+    color: var(--disable-color);
+    background-color: var(--accent-color);
     cursor: default;
-    -webkit-text-stroke: 0px white;
-    border: 0.5px solid #d3d3d3;
+    -webkit-text-stroke: 0px var(--accent-color);
+    border: 0.5px solid var(--disable-color);
   }
 }
 
