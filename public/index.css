@@ -68,10 +68,9 @@ a{
 .twitter-tweet{
   margin: auto;
 }
-#tweet-container{
-
+#tweet-container-display{
   margin: auto;
-  margin-bottom: 15%;
+  /*margin-bottom: 15%;*/
   z-index: -1;
 }
 
@@ -110,6 +109,7 @@ p{
 
 .hide{
   display: none;
+  z-index: -1;
 }
 
 
@@ -172,7 +172,7 @@ a li:active{
     width: 70%;
     font-size: 12px;
   }
-  #tweet-container{
+  #tweet-container-display{
     width: 95%;
   }
 }

@@ -33,15 +33,19 @@
     
     <h1>Dril bits</h1>
 
-    <div id="tweet-container">
+    <div id="tweet-container-previous" class="hide" data-tweetid="">
+
+    </div>
+
+    <div id="tweet-container-display" data-tweetid=<%=""+ tweet.id %> >
       <blockquote class="twitter-tweet">
-        <a href=<%= "http://twitter.com/dril/status/" + tweet.id %>></a>
+        <a href=<%= "http://twitter.com/dril/status/" + tweet.id %>> </a>
       </blockquote>
     </div>
 
-    <div id="tweet-hidden" class="hide">
+    <div id="tweet-container-next" class="hide" data-tweetid=<%=""+ tweet2.id %> >
       <blockquote class="twitter-tweet">
-        <a href=<%= "http://twitter.com/dril/status/" + tweet2.id %>></a>
+        <a href=<%= "http://twitter.com/dril/status/" + tweet2.id %>> </a>
       </blockquote>
     </div>
     
