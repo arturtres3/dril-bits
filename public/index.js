@@ -3,8 +3,11 @@ const back = document.getElementById('back')
 const container_display = document.getElementById('tweet-container-display')
 const container_next = document.getElementById('tweet-container-next')
 const container_previous = document.getElementById('tweet-container-previous')
+const dark_mode = document.getElementById("dark-mode");
+const root = document.querySelector(':root');
 
 let history = new History()
+let theme = "light"
 function currentId() {return container_display.dataset.tweetid}
 
 window.onload = () => {
@@ -21,6 +24,20 @@ window.onload = () => {
     });
 }
 
+dark_mode.onchange = () => {
+    if (dark_mode.checked){
+        document.body.classList.add("dark-mode")
+        root.style.setProperty('--accent-color', 'lightgray')
+        theme = "dark"
+    }else{
+	    document.body.classList.remove("dark-mode")
+        root.style.setProperty('--accent-color', 'white')
+        theme = "light"
+    }
+    loadNewTweet(container_previous.dataset.tweetid, container_previous)
+    loadNewTweet(container_display.dataset.tweetid, container_display)
+    loadNewTweet(container_next.dataset.tweetid, container_next)
+}
 
 document.addEventListener('keyup', function (event) {
     if (event.defaultPrevented) {
@@ -59,6 +76,7 @@ function httpGetAsync(theUrl, callback)
 function loadNewTweet(newId, location) {
     const newTweet = document.createElement('blockquote')
     newTweet.className = 'twitter-tweet'
+    newTweet.dataset.theme = theme
 
     const linkNewTweet = document.createElement('a')
     linkNewTweet.href = 'http://twitter.com/dril/status/' + newId

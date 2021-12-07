@@ -10,7 +10,6 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="Example">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="twitter:widgets:theme" content="light">
 
     <link rel="icon" type="image/jpg" sizes="32x32" href="dril.jpg">
     <link rel="icon" type="image/jpg" sizes="96x96" href="dril.jpg">
@@ -29,6 +28,13 @@
     <ul id="navbar">
       <li> <a href="/About">About</a> </li>
       <li> <a href="/Download">Download.txt</a> </li>
+      <li class="right">
+        <label class="switch">
+          <input id="dark-mode" type="checkbox">
+          <span class="slider"></span>
+        </label>
+      </li>
+      <li class="right"> <span>Dark mode</span> </li>
     </ul>
     
     <h1>Dril bits</h1>
@@ -38,8 +44,8 @@
     </div>
 
     <div id="tweet-container-display" data-tweetid=<%=""+ tweet.id %> >
-      <blockquote class="twitter-tweet">
-        <a href=<%= "http://twitter.com/dril/status/" + tweet.id %>> </a>
+      <blockquote class="twitter-tweet"">
+        <a href=<%= "http://twitter.com/dril/status/" + tweet.id%>> </a>
       </blockquote>
     </div>
 
