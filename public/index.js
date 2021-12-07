@@ -11,8 +11,9 @@ window.onload = () => {
     // salva o primeiro id
     history.add(currentId());
 
+    // reativa os botoes quando carrega um tweet
     twttr.ready(function (twttr) {
-        twttr.events.bind('loaded', function (event) {
+        twttr.events.bind('rendered', function (event) {
             next.classList.remove("disable")
             if(!history.isOnEnd(currentId()))
                 back.classList.remove("disable")
@@ -29,10 +30,16 @@ document.addEventListener('keyup', function (event) {
     let key = event.key || event.keyCode;
 
     if (key === 'Enter' || key === 13){
-        next.click()
+        if(!next.classList.contains("disable"))
+            next.click()
     }
     if (key === 'Backspace' || key === 8){
-        back.click()
+        if(!back.classList.contains("disable"))
+            back.click()
+    }
+    if (key === 'r' || key === 82){
+        if(!random.classList.contains("hide"))
+            random.click()
     }
 
 })
@@ -87,6 +94,7 @@ next.addEventListener('click', () => {
         moveTweet(container_next, container_display)
         
         if(history.isOnTop(currentId())){
+            random.classList.add("hide")
             next.innerHTML = "Another one"
             httpGetAsync('/next', (nextTweet) => { 
                 loadNewTweet(JSON.parse(nextTweet).id, container_next) 
@@ -112,6 +120,26 @@ back.addEventListener('click', () => {
 
         next.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Next &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
     }
+    random.classList.remove("hide")
+})
+
+random.addEventListener('click', () => {
+    next.innerHTML = "Another one"
+    next.classList.add("disable")
+    back.classList.add("disable")
+    random.classList.add("hide")
+    
+    httpGetAsync('/next', (nextTweet) => { 
+            loadNewTweet(JSON.parse(nextTweet).id, container_display) 
+            history.add(JSON.parse(nextTweet).id)
+    })
+    
+    loadNewTweet(history.getLatest(), container_previous)
+    
+    httpGetAsync('/next', (nextTweet) => { 
+        loadNewTweet(JSON.parse(nextTweet).id, container_next) 
+    })
+
 })
 
 

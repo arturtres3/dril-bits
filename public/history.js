@@ -9,17 +9,22 @@ class History {
         return this.list
     }
 
+    getLatest(){
+        return this.list[0]
+    }
+
     add(id){
+        //console.log(`added ${id}`);
         this.list.unshift(id)
     }
 
     isOnTop(currentId){
-        //console.log(`display:${currentId}, list[0]:${this.list[0]}`);
+        //console.log(`isOnTop ${currentId == this.list[0]} display:${currentId}, list[0]:${this.list[0]}`);
         return currentId == this.list[0]
     }
 
     isOnEnd(currentId){
-        //console.log(`display:${currentId}, list[last]:${this.list[this.list.length -1]}`);
+        //console.log(`isOnEnd ${currentId == this.list[this.list.length -1]} display:${currentId}, list[last]:${this.list[this.list.length -1]}`);
         return currentId == this.list[this.list.length -1]
     }
 

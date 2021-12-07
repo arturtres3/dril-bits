@@ -104,6 +104,13 @@ p{
   border: 0.5px solid var(--disable-color);
 }
 
+#random{
+  font-size: 20px;
+  display: inline-block;
+  padding: 4px;
+  margin-bottom: 18px;
+}
+
 .disable{
   color: var(--disable-color);
   pointer-events: none;
@@ -111,7 +118,7 @@ p{
 
 
 .hide{
-  display: none;
+  display: none !important;
   z-index: -1;
 }
 
