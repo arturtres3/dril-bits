@@ -9,7 +9,15 @@ function currentId() {return container_display.dataset.tweetid}
 
 window.onload = () => {
     // salva o primeiro id
-    history.add(container_display.children[0].children[0].href.replace("http://twitter.com/dril/status/", ""));
+    history.add(currentId());
+
+    twttr.ready(function (twttr) {
+        twttr.events.bind('loaded', function (event) {
+            next.classList.remove("disable")
+            if(!history.isOnEnd(currentId()))
+                back.classList.remove("disable")
+        });
+    });
 }
 
 
@@ -69,6 +77,7 @@ next.addEventListener('click', () => {
         moveTweet(container_next, container_display)
         history.add(currentId())
 
+        next.classList.add("disable")
         httpGetAsync('/next', (nextTweet) => { 
             loadNewTweet(JSON.parse(nextTweet).id, container_next) 
         })
