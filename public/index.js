@@ -1,13 +1,24 @@
 const next = document.getElementById('next')
 const back = document.getElementById('back')
-const container = document.getElementById('tweet-container')
-const container_hidden = document.getElementById('tweet-hidden')
+const container_display = document.getElementById('tweet-container-display')
+const container_next = document.getElementById('tweet-container-next')
+const container_previous = document.getElementById('tweet-container-previous')
 
 let history = new History()
+function currentId() {return container_display.dataset.tweetid}
 
 window.onload = () => {
     // salva o primeiro id
-    history.add(container.children[0].children[0].href.replace("http://twitter.com/dril/status/", ""));
+    history.add(currentId());
+
+    // reativa os botoes quando carrega um tweet
+    twttr.ready(function (twttr) {
+        twttr.events.bind('rendered', function (event) {
+            next.classList.remove("disable")
+            if(!history.isOnEnd(currentId()))
+                back.classList.remove("disable")
+        });
+    });
 }
 
 
@@ -19,10 +30,16 @@ document.addEventListener('keyup', function (event) {
     let key = event.key || event.keyCode;
 
     if (key === 'Enter' || key === 13){
-        next.click()
+        if(!next.classList.contains("disable"))
+            next.click()
     }
     if (key === 'Backspace' || key === 8){
-        back.click()
+        if(!back.classList.contains("disable"))
+            back.click()
+    }
+    if (key === 'r' || key === 82){
+        if(!random.classList.contains("hide"))
+            random.click()
     }
 
 })
@@ -49,46 +66,80 @@ function loadNewTweet(newId, location) {
     
     Array.from(location.children).forEach( oldTweet => {oldTweet.remove()} )  
     location.appendChild(newTweet)
+    location.dataset.tweetid = newId
     
     twttr.widgets.load(location)
 }
 
-function moveToContainer(){
-    Array.from(container.children).forEach( oldTweet => {oldTweet.remove()} )  
-    container.append(container_hidden.children[0])
+function moveTweet(origin, destination){
+    destination.dataset.tweetid = origin.dataset.tweetid
+    Array.from(destination.children).forEach( oldTweet => {oldTweet.remove()} )  
+    destination.append(origin.children[0])
 }
 
 
 next.addEventListener('click', () => {
-    if(history.isOnTop()){
-        moveToContainer()
+    if(history.isOnTop(currentId())){
+        moveTweet(container_display, container_previous)
+        moveTweet(container_next, container_display)
+        history.add(currentId())
 
+        next.classList.add("disable")
         httpGetAsync('/next', (nextTweet) => { 
-            const id = JSON.parse(nextTweet).id
-            loadNewTweet(id, container_hidden) 
-
-            history.add(container.children[0].children[0].dataset.tweetId)
+            loadNewTweet(JSON.parse(nextTweet).id, container_next) 
         })
     }
     else{ 
-        loadNewTweet(history.goForward(), container)
+        moveTweet(container_display, container_previous)
+        moveTweet(container_next, container_display)
         
-        if(history.isOnTop())
+        if(history.isOnTop(currentId())){
+            random.classList.add("hide")
             next.innerHTML = "Another one"
+            httpGetAsync('/next', (nextTweet) => { 
+                loadNewTweet(JSON.parse(nextTweet).id, container_next) 
+            })
+
+        }else{
+            loadNewTweet(history.goForward(currentId()), container_next)
+
+        }
     }
 
     back.classList.remove("disable")
 })
 
 back.addEventListener('click', () => {
-    if(!history.isOnEnd()){
-        loadNewTweet(history.goBack(), container)
+    if(!history.isOnEnd(currentId())){
+        moveTweet(container_display, container_next)
+        moveTweet(container_previous, container_display)
+        loadNewTweet(history.goBack(currentId()), container_previous)
 
-        if(history.isOnEnd())
+        if(history.isOnEnd(currentId()))
             back.classList.add("disable")
 
         next.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Next &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
     }
+    random.classList.remove("hide")
+})
+
+random.addEventListener('click', () => {
+    next.innerHTML = "Another one"
+    next.classList.add("disable")
+    back.classList.add("disable")
+    random.classList.add("hide")
+    
+    httpGetAsync('/next', (nextTweet) => { 
+            loadNewTweet(JSON.parse(nextTweet).id, container_display) 
+            history.add(JSON.parse(nextTweet).id)
+    })
+    
+    loadNewTweet(history.getLatest(), container_previous)
+    
+    httpGetAsync('/next', (nextTweet) => { 
+        loadNewTweet(JSON.parse(nextTweet).id, container_next) 
+    })
+
 })
 
 

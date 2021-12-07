@@ -6,6 +6,8 @@
 
 body {
   background-image: url(dril.jpg);
+  /*background: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)),url(dril.jpg);*/
+  background-color: black;
   position: relative;
   text-align: center;
   margin: auto;
@@ -68,8 +70,7 @@ a{
 .twitter-tweet{
   margin: auto;
 }
-#tweet-container{
-
+#tweet-container-display{
   margin: auto;
   margin-bottom: 15%;
   z-index: -1;
@@ -103,13 +104,22 @@ p{
   border: 0.5px solid var(--disable-color);
 }
 
+#random{
+  font-size: 20px;
+  display: inline-block;
+  padding: 4px;
+  margin-bottom: 18px;
+}
+
 .disable{
   color: var(--disable-color);
+  pointer-events: none;
 }
 
 
 .hide{
-  display: none;
+  display: none !important;
+  z-index: -1;
 }
 
 
@@ -172,7 +182,7 @@ a li:active{
     width: 70%;
     font-size: 12px;
   }
-  #tweet-container{
+  #tweet-container-display{
     width: 95%;
   }
 }

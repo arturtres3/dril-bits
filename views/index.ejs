@@ -33,26 +33,33 @@
     
     <h1>Dril bits</h1>
 
-    <div id="tweet-container">
+    <div id="tweet-container-previous" class="hide" data-tweetid="">
+
+    </div>
+
+    <div id="tweet-container-display" data-tweetid=<%=""+ tweet.id %> >
       <blockquote class="twitter-tweet">
-        <a href=<%= "http://twitter.com/dril/status/" + tweet.id %>></a>
+        <a href=<%= "http://twitter.com/dril/status/" + tweet.id %>> </a>
       </blockquote>
     </div>
 
-    <div id="tweet-hidden" class="hide">
+    <div id="tweet-container-next" class="hide" data-tweetid=<%=""+ tweet2.id %> >
       <blockquote class="twitter-tweet">
-        <a href=<%= "http://twitter.com/dril/status/" + tweet2.id %>></a>
+        <a href=<%= "http://twitter.com/dril/status/" + tweet2.id %>> </a>
       </blockquote>
     </div>
     
     <br>
 
     <ul id="buttons">
+      <a title="R" id="random" class="control hide">Random</a>
+      <br>
       <a title="Backspace" id="back" class="control disable">Back</a>
       <a title="Enter" id="next" class="control">Another one</a>
+      
     </ul>
 
-    <script src="history.js"></script>
-    <script src="index.js"></script>
+    <script defer src="history.js"></script>
+    <script defer src="index.js"></script>
   </body>
 </html>

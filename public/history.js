@@ -2,34 +2,42 @@
 class History {
 
     constructor() {
-        this.list = [];
-        this.ptr = 0;    
+        this.list = [];   
     }
 
     getList(){
         return this.list
     }
 
+    getLatest(){
+        return this.list[0]
+    }
+
     add(id){
+        //console.log(`added ${id}`);
         this.list.unshift(id)
     }
 
-    isOnTop(){
-        return this.ptr == 0
+    isOnTop(currentId){
+        //console.log(`isOnTop ${currentId == this.list[0]} display:${currentId}, list[0]:${this.list[0]}`);
+        return currentId == this.list[0]
     }
 
-    isOnEnd(){
-        return this.ptr == this.list.length-1
+    isOnEnd(currentId){
+        //console.log(`isOnEnd ${currentId == this.list[this.list.length -1]} display:${currentId}, list[last]:${this.list[this.list.length -1]}`);
+        return currentId == this.list[this.list.length -1]
     }
 
-    goBack(){
-        this.ptr++
-        return this.list[this.ptr]
+    goBack(currentId){
+        let index = this.list.findIndex(element => element === currentId)
+        //console.log(`i: ${index}, length: ${this.list.length}`);
+        return this.list[index + 1]
     }
 
-    goForward(){
-        this.ptr--
-        return this.list[this.ptr]
+    goForward(currentId){
+        let index = this.list.findIndex(element => element === currentId)
+        //console.log(`i: ${index}, length: ${this.list.length}`);
+        return this.list[index - 1]
     }
 
     
