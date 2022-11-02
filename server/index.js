@@ -1,8 +1,8 @@
 //const path = require('path');
 
-module.exports = (app, tweets) => {
+module.exports = (app) => {
 
-  require('./downloads/')(app, tweets);
+  require('./downloads/')(app);
   
   const Twitter = require('./twitter/');
 
