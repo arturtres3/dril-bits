@@ -1,31 +1,21 @@
 const dotenv = require('dotenv');
 const {MongoClient} = require('mongodb');
+dotenv.config();
 
 const uri = process.env.MONGO_ACESS_URI
 
 const client = new MongoClient(uri);
 
-async function test(){
+async function retrieveAllTweets(){
     try {
-        // Connect to the MongoDB cluster
         await client.connect();
- 
-        // Make the appropriate DB calls
-        //await  listDatabases(client);
-        const db = client.db('dril-bits');
-        const collection = db.collection('all-tweets');
 
-        const cursor = collection.find({}) // get cursor to collection
+        const cursor = client.db('dril-bits').collection('all-tweets').find({}) // get cursor to collection
 
-        /*await tst.forEach( (item) => {
-            console.log(item);
-        })*/
-        const tst = await cursor.toArray() // makes full collection into an array
+        const tweets = await cursor.toArray() // makes full collection into an array
 
-        //console.log(tst[0].date.toUTCString())
-        console.log(tst.length);
+        return tweets
 
- 
     } catch (e) {
         console.error(e);
     } finally {
@@ -33,6 +23,52 @@ async function test(){
     }
 }
 
+async function retrieveLatestTweetId(){
+    try {
+        await client.connect();
 
-test()
+        // cursor to collection sorted from newest to oldest
+        const cursor = client.db('dril-bits').collection('all-tweets').find({}).sort({"date": -1})
+
+        const latest = await cursor.next() // first item
+
+        return latest.id
+
+    } catch (e) {
+        console.error(e);
+    } finally {
+        await client.close();
+    }
+}
+
+async function insertOneTweet(tweet){
+    try {
+        await client.connect();
+
+        result = await client.db('dril-bits').collection('all-tweets').insertOne(tweet)
+
+        console.log(result);
+
+    } catch (e) {
+        console.error(e);
+    } finally {
+        await client.close();
+    }
+}
+
+async function insertManyTweets(tweets){
+    try {
+        await client.connect();
+
+        result = await client.db('dril-bits').collection('all-tweets').insertMany(tweets)
+
+        console.log(result);
+
+    } catch (e) {
+        console.error(e);
+    } finally {
+        await client.close();
+    }
+}
+
 
