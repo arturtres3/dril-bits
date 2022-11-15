@@ -8,6 +8,7 @@ const fileNameTweets = path.join(__dirname, '../../public/dril.json');
 const fileNameDeletedTweets = path.join(__dirname, '../../public/deleted.json');
 
 const tweets = require(fileNameTweets);
+const deleted_tweets = require(fileNameDeletedTweets)
 
 const client = new Twitter({
     bearer_token: process.env.TWITTER_BEARER_TOKEN
@@ -125,6 +126,38 @@ const checkDeleted = async () => {
     console.log(`writing ${deletedTweets.length} ids to ${fileNameDeletedTweets}`);
   })
 
+}
+
+function getTextfromDeletedIds(){
+  deletedRESULT = []
+  deletedNoRT = []
+  const filenameFULL = path.join(__dirname, '../../public/deletedNoRT.json')
+  const filenameNoRT = path.join(__dirname, '../../public/deletedNoRT.json')
+
+  deleted_tweets.forEach( (deleted_id) => {
+    deletedRESULT.push(tweets.find(({ id }) => id === deleted_id))
+  })
+  
+  deletedRESULT.forEach( (tweet) => {
+    if(!(tweet.text[0] == "R" && tweet.text[1] == "T")){
+      deletedNoRT.push(tweet)
+    }
+  })
+
+  console.log(`all: ${deletedRESULT.length}   noRT: ${deletedNoRT.length}`);
+  /*
+  // write results to file
+
+  fs.writeFile(filenameFULL, JSON.stringify(deletedRESULT), function writeJSON(err) {
+    if (err) return console.log(err);
+    console.log(`writing ${deletedRESULT.length} ids to ${filenameFULL}`);
+  })
+
+  fs.writeFile(filenameNoRT, JSON.stringify(deletedNoRT), function writeJSON(err) {
+    if (err) return console.log(err);
+    console.log(`writing ${deletedNoRT.length} ids to ${filename}`);
+  })
+  */
 }
 
 const updateRoute = async (app) => {

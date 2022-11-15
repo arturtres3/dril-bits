@@ -12,5 +12,7 @@ module.exports = (app) => {
   // Chama a funcao para executar ao iniciar o servidor
   Twitter.updateFunc()
 
+  require('./db/')
+
 
 };
