@@ -1,14 +1,8 @@
 const edge = "\n______________________________________________________________________\n\n";
-const path = require('path');
 
-module.exports = (app) => {
+module.exports = (app, tweets) => {
 
   app.get('/DownloadJSON', (req, res) => {
-    const allTweets = require(path.join(__dirname, '../../public/dril.json'));
-    const deletedTweets = require(path.join(__dirname, '../../public/deleted.json'));
-    
-    // Tira do pool de tweets aqueles que foram deletados (ou estao indisponiveis por algum motivo)
-    const tweets = allTweets.filter(tweet =>{return !deletedTweets.includes(tweet.id)}) 
 
     var json = JSON.stringify(tweets);
     var filename = 'dril.json';
@@ -19,11 +13,6 @@ module.exports = (app) => {
     });
 
   app.get('/Download', (req, res) => {
-    const allTweets = require(path.join(__dirname, '../../public/dril.json'));
-    const deletedTweets = require(path.join(__dirname, '../../public/deleted.json'));
-    
-    // Tira do pool de tweets aqueles que foram deletados (ou estao indisponiveis por algum motivo)
-    const tweets = allTweets.filter(tweet =>{return !deletedTweets.includes(tweet.id)}) 
 
     var txt = "";
     tweets.forEach(tweet => {
