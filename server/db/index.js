@@ -61,21 +61,6 @@ async function retrieveLatestTweetId(){
     }
 }
 
-async function insertOneTweet(tweet){
-    try {
-        await client.connect();
-
-        result = await client.db('dril-bits').collection('all-tweets').insertOne(tweet)
-
-        console.log(result);
-
-    } catch (e) {
-        console.error(e);
-    } finally {
-        await client.close();
-    }
-}
-
 async function insertManyTweets(tweets){
     try {
         await client.connect();
@@ -109,8 +94,6 @@ async function insertManyDeletedIds(ids){
 
 exports.retrieveAllTweets = retrieveAllTweets
 exports.retrieveLatestTweetId = retrieveLatestTweetId
-exports.insertOneTweet = insertOneTweet
 exports.insertManyTweets = insertManyTweets
 exports.retrieveAllDeletedTweets = retrieveAllDeletedTweets
 exports.insertManyDeletedIds = insertManyDeletedIds
-

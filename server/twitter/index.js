@@ -1,25 +1,17 @@
 const dotenv = require('dotenv');
 const Twitter = require('twitter-v2');
-const path = require('path');
-const fs = require('fs');
 dotenv.config();
-
-const fileNameTweets = path.join(__dirname, '../../public/dril.json');
-const fileNameDeletedTweets = path.join(__dirname, '../../public/deleted.json');
-
-const tweets = require(fileNameTweets);
-const deleted_tweets = require(fileNameDeletedTweets)
 
 const client = new Twitter({
     bearer_token: process.env.TWITTER_BEARER_TOKEN
   });
-
 
 // Retorna os tweets postados depois do id recebido
 async function getNewTweets(last_id){
   let allData = []
   let new_tweets = []
 
+  // primeira chamada
   let response = await client.get('users/16298441/tweets', {
     tweet: {
       fields: ['created_at'],
@@ -27,9 +19,9 @@ async function getNewTweets(last_id){
     max_results: 100,
     since_id: last_id,
   });
-  //console.log(response.meta)
   if(response.meta.result_count > 0){allData = response.data}
 
+  // repete a chamada enquanto existir proxima pagina
   while(response.meta.hasOwnProperty('next_token')){
     response = await client.get('users/16298441/tweets', {
         tweet: {
@@ -45,9 +37,9 @@ async function getNewTweets(last_id){
             allData.push(tweet)
           })
       }
-      //console.log(response.meta)
   }
 
+  // formata cada tweet como documento para o db
   if(allData.length > 0){
     allData.forEach(tweet => {
       const item = new Object();
@@ -71,10 +63,12 @@ const testTweetsAvailability = async (list_ids) => {
 
   while(counter < list_ids.length){
     
+    // tenta acessar ids na API
     let response = await client.get('tweets', {
       ids: list_ids[counter],
     })
 
+    // guarda ids que retornaram erro
     if(response != undefined && response.errors != undefined){
       response.errors.forEach(error_tweet => {
         deleted_tweets.push(error_tweet.value)
@@ -87,13 +81,14 @@ const testTweetsAvailability = async (list_ids) => {
   return deleted_tweets
 }
 
-// Cria listas de id para chamar o teste e retorna array de ids indisponiveis no formato do db
+// Cria listas de id para chamar o teste e retorna array de ids indisponiveis no formato do db [MUITO LENTO]
 const getAllDeleted = async () => {
   let count = 1
-  let ids_str = "1119383548111261696" //so pra nao ficar a virgula no inicio
+  let ids_str = "1119383548111261696" //id qqr so pra nao ficar a virgula no inicio
   let all_ids = []
   let deletedArray = []
 
+  // junta ids em grupos de 100 para fazer menos chamadas na API
   tweets.forEach(tweet => {
     if(count < 100){
       ids_str = ids_str + ',' + tweet.id
@@ -104,12 +99,13 @@ const getAllDeleted = async () => {
       count = 1
     }
   })
-  all_ids.push(ids_str) // lista de strings e cada uma contém 100 ids separados por virgula 
+  all_ids.push(ids_str) // lista de strings onde cada uma contém 100 ids separados por virgula 
   
   let deletedTweets = await testTweetsAvailability(all_ids).catch(error => {
     console.log("error fetching tweets: " + error)
   })
 
+  // formata para guardar no db
   deletedTweets.forEach( (id) => {
     const item = new Object();
     item.id = id
@@ -126,11 +122,17 @@ exports.getAllDeleted = getAllDeleted
 
 
 
-
-
 // VVVV  FUNCOES ANTIGAS QUE SALVAM EM ARQUIVOS JSON LOCAIS    VVVV
 
 /*
+const path = require('path');
+const fs = require('fs');
+
+const fileNameTweets = path.join(__dirname, '../../public/dril.json');
+const fileNameDeletedTweets = path.join(__dirname, '../../public/deleted.json');
+
+const tweets = require(fileNameTweets);
+const deleted_tweets = require(fileNameDeletedTweets)
 
 // atualiza arquivo de tweets indisponiveis
 const checkDeletedJSON = async () => {

@@ -27,24 +27,33 @@ async function UpdateDeletedTweetsInDatabase(){
   
 }
 
-module.exports = async (app) => {
+function defineUpdateRoutes(app){
 
-  await UpdateTweetsInDatabase()
-
+  // Atualiza tweets
   app.get('/UpdateTweets', async (req, res) => {
     await UpdateTweetsInDatabase().then()
     res.redirect("/")
   })
 
+  // Testa todos tweets e atualiza quais foram deletados [MUITO LENTO]
   app.get('/UpdateDeleted', async (req, res) => {
     await UpdateDeletedTweetsInDatabase().then()
     res.redirect("/")
   })
+}
+
+module.exports = async (app) => {
+
+  await UpdateTweetsInDatabase()
+
+  defineUpdateRoutes(app)
 
   const allTweets = await db.retrieveAllTweets()
   const deletedTweets = await db.retrieveAllDeletedTweets()
+  
+  // downloads incluem tweets deletados
+  require('./downloads/')(app, allTweets); 
 
-  require('./downloads/')(app, allTweets);
-
+  // retorna apenas tweets que podem ser mostrados no app
   return allTweets.filter(tweet =>{return !deletedTweets.includes(tweet.id)}) 
 };
