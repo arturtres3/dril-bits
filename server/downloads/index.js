@@ -4,9 +4,9 @@ module.exports = (app, tweets) => {
 
   app.get('/DownloadJSON', (req, res) => {
 
-    var json = JSON.stringify(tweets);
-    var filename = 'dril.json';
-    var mimetype = 'application/json';
+    const json = JSON.stringify(tweets);
+    const filename = 'dril.json';
+    const mimetype = 'application/json';
     res.setHeader('Content-Type', mimetype);
     res.setHeader('Content-disposition','attachment; filename='+filename);
     res.send( json );
@@ -14,12 +14,32 @@ module.exports = (app, tweets) => {
 
   app.get('/Download', (req, res) => {
 
-    var txt = "";
+    let txt = "";
     tweets.forEach(tweet => {
-      txt = txt + tweet.text + "\n"+ tweet.date + "\nhttp://twitter.com/dril/status/" + tweet.id + edge;
+      txt = txt + tweet.text + "\n\n"+ tweet.date.toISOString() + "\nhttp://twitter.com/dril/status/" + tweet.id + edge;
     });
-    var filename = 'dril.txt';
-    var mimetype = 'text/plain';
+
+    const filename = 'dril.txt';
+    const mimetype = 'text/plain';
+    res.setHeader('Content-Type', mimetype);
+    res.setHeader('Content-disposition','attachment; filename='+filename);
+    res.send( txt );
+  });
+
+  // sem link para tweets, sem links de imagens e em ordem aleatória
+  app.get('/DownloadDisplay', (req, res) => {
+
+    let txt = "";
+    const randTweets = tweets.sort((a, b) => 0.5 - Math.random());
+
+    randTweets.forEach(tweet => {
+      if(! tweet.text.includes("http")){
+        txt = txt + tweet.text + "\n\n"+ tweet.date.toISOString() + "\n______________________________\n\n";
+      }
+    });
+
+    const filename = 'wint.txt';
+    const mimetype = 'text/plain';
     res.setHeader('Content-Type', mimetype);
     res.setHeader('Content-disposition','attachment; filename='+filename);
     res.send( txt );
