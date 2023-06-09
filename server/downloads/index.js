@@ -1,4 +1,4 @@
-const edge = "\n______________________________________________________________________\n\n";
+const edge = "\n________________________\n\n";
 
 module.exports = (app, tweets) => {
 
@@ -16,7 +16,7 @@ module.exports = (app, tweets) => {
 
     let txt = "";
     tweets.forEach(tweet => {
-      txt = txt + tweet.text + "\n\n"+ tweet.date.toISOString() + "\nhttp://twitter.com/dril/status/" + tweet.id + edge;
+      txt = txt + tweet.text + "\n\nhttp://twitter.com/dril/status/" + tweet.id + "\n" + tweet.date.toISOString() + edge;
     });
 
     const filename = 'dril.txt';
@@ -30,11 +30,12 @@ module.exports = (app, tweets) => {
   app.get('/DownloadDisplay', (req, res) => {
 
     let txt = "";
-    const randTweets = tweets.sort((a, b) => 0.5 - Math.random());
+    // sort altera o original, por isso slice para copiar
+    const randTweets = tweets.slice(0).sort((a, b) => 0.5 - Math.random()); 
 
     randTweets.forEach(tweet => {
       if(! tweet.text.includes("http")){
-        txt = txt + tweet.text + "\n\n"+ tweet.date.toISOString() + "\n______________________________\n\n";
+        txt = txt + tweet.text + "\n\n"+ tweet.date.toISOString() + edge;
       }
     });
 

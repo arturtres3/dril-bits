@@ -44,9 +44,16 @@ function defineUpdateRoutes(app){
 
 module.exports = async (app) => {
 
-  await UpdateTweetsInDatabase()
+  try{
 
-  defineUpdateRoutes(app)
+    await UpdateTweetsInDatabase()
+    defineUpdateRoutes(app)
+
+  } catch (error) {
+    console.error(error);
+  }
+
+  
 
   const allTweets = await db.retrieveAllTweets()
   const deletedTweets = await db.retrieveAllDeletedTweets()
