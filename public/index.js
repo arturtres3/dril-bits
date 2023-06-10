@@ -8,60 +8,22 @@ const root = document.querySelector(':root');
 
 let history = new History()
 let theme = "light"
+let tweets = []
+
 function currentId() {return container_display.dataset.tweetid}
 
-window.onload = () => {
-    // salva o primeiro id
-    history.add(currentId());
+function randElem(list){return list[Math.ceil(Math.random() * list.length)]}
 
-    // reativa os botoes quando carrega um tweet
-    twttr.ready(function (twttr) {
-        twttr.events.bind('rendered', function (event) {
-            next.classList.remove("disable")
-            if(!history.isOnEnd(currentId()))
-                back.classList.remove("disable")
-        });
-    });
+function httpGet(theUrl)
+{
+    var xmlHttp = new XMLHttpRequest();
+
+    xmlHttp.open("GET", theUrl, false); // true for asynchronous 
+    xmlHttp.send(null);
+
+    return JSON.parse(xmlHttp.responseText)
 }
 
-dark_mode.onchange = () => {
-    if (dark_mode.checked){
-        document.body.classList.add("dark-mode")
-        root.style.setProperty('--accent-color', 'lightgray')
-        theme = "dark"
-    }else{
-	    document.body.classList.remove("dark-mode")
-        root.style.setProperty('--accent-color', 'white')
-        theme = "light"
-    }
-    loadNewTweet(container_previous.dataset.tweetid, container_previous)
-    loadNewTweet(container_display.dataset.tweetid, container_display)
-    loadNewTweet(container_next.dataset.tweetid, container_next)
-}
-
-document.addEventListener('keyup', function (event) {
-    if (event.defaultPrevented) {
-        return;
-    }
-
-    let key = event.key || event.keyCode;
-
-    if (key === 'Enter' || key === 13){
-        if(!next.classList.contains("disable"))
-            next.click()
-    }
-    if (key === 'Backspace' || key === 8){
-        if(!back.classList.contains("disable"))
-            back.click()
-    }
-    if (key === 'r' || key === 82){
-        if(!random.classList.contains("hide"))
-            random.click()
-    }
-
-})
-
-// recebe um novo tweet da rota /next (funcao copiada)
 function httpGetAsync(theUrl, callback)
 {
     var xmlHttp = new XMLHttpRequest();
@@ -96,6 +58,62 @@ function moveTweet(origin, destination){
 }
 
 
+window.onload = () => {
+    // salva o primeiro id
+    history.add(currentId());
+
+    tweets = httpGet('/DownloadCleanJSON')
+
+    // reativa os botoes quando carrega um tweet
+    twttr.ready(function (twttr) {
+        twttr.events.bind('rendered', function (event) {
+            next.classList.remove("disable")
+            if(!history.isOnEnd(currentId()))
+                back.classList.remove("disable")
+        });
+    });
+}
+
+
+dark_mode.onchange = () => {
+    if (dark_mode.checked){
+        document.body.classList.add("dark-mode")
+        root.style.setProperty('--accent-color', 'lightgray')
+        theme = "dark"
+    }else{
+	    document.body.classList.remove("dark-mode")
+        root.style.setProperty('--accent-color', 'white')
+        theme = "light"
+    }
+    loadNewTweet(container_previous.dataset.tweetid, container_previous)
+    loadNewTweet(container_display.dataset.tweetid, container_display)
+    loadNewTweet(container_next.dataset.tweetid, container_next)
+}
+
+
+document.addEventListener('keyup', function (event) {
+    if (event.defaultPrevented) {
+        return;
+    }
+
+    let key = event.key || event.keyCode;
+
+    if (key === 'Enter' || key === 13){
+        if(!next.classList.contains("disable"))
+            next.click()
+    }
+    if (key === 'Backspace' || key === 8){
+        if(!back.classList.contains("disable"))
+            back.click()
+    }
+    if (key === 'r' || key === 82){
+        if(!random.classList.contains("hide"))
+            random.click()
+    }
+
+})
+
+
 next.addEventListener('click', () => {
     if(history.isOnTop(currentId())){
         moveTweet(container_display, container_previous)
@@ -103,9 +121,9 @@ next.addEventListener('click', () => {
         history.add(currentId())
 
         next.classList.add("disable")
-        httpGetAsync('/next', (nextTweet) => { 
-            loadNewTweet(JSON.parse(nextTweet).id, container_next) 
-        })
+
+        loadNewTweet(randElem(tweets).id, container_next)
+
     }
     else{ 
         moveTweet(container_display, container_previous)
@@ -114,9 +132,8 @@ next.addEventListener('click', () => {
         if(history.isOnTop(currentId())){
             random.classList.add("hide")
             next.innerHTML = "Another one"
-            httpGetAsync('/next', (nextTweet) => { 
-                loadNewTweet(JSON.parse(nextTweet).id, container_next) 
-            })
+
+            loadNewTweet(randElem(tweets).id, container_next)
 
         }else{
             loadNewTweet(history.goForward(currentId()), container_next)
@@ -126,6 +143,7 @@ next.addEventListener('click', () => {
 
     back.classList.remove("disable")
 })
+
 
 back.addEventListener('click', () => {
     if(!history.isOnEnd(currentId())){
@@ -141,23 +159,20 @@ back.addEventListener('click', () => {
     random.classList.remove("hide")
 })
 
+
 random.addEventListener('click', () => {
     next.innerHTML = "Another one"
     next.classList.add("disable")
     back.classList.add("disable")
     random.classList.add("hide")
-    
-    httpGetAsync('/next', (nextTweet) => { 
-            loadNewTweet(JSON.parse(nextTweet).id, container_display) 
-            history.add(JSON.parse(nextTweet).id)
-    })
-    
+
     loadNewTweet(history.getLatest(), container_previous)
     
-    httpGetAsync('/next', (nextTweet) => { 
-        loadNewTweet(JSON.parse(nextTweet).id, container_next) 
-    })
-
+    let next_tweet_id = randElem(tweets).id
+    loadNewTweet(next_tweet_id, container_display)
+    history.add(next_tweet_id)
+    
+    loadNewTweet(randElem(tweets).id, container_next)
 })
 
 

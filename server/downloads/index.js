@@ -1,10 +1,21 @@
 const edge = "\n________________________\n\n";
 
-module.exports = (app, tweets) => {
+module.exports = (app, tweets, deletedTweets) => {
 
   app.get('/DownloadJSON', (req, res) => {
 
     const json = JSON.stringify(tweets);
+    const filename = 'dril.json';
+    const mimetype = 'application/json';
+    res.setHeader('Content-Type', mimetype);
+    res.setHeader('Content-disposition','attachment; filename='+filename);
+    res.send( json );
+    });
+
+  app.get('/DownloadCleanJSON', (req, res) => {
+
+    let cleanTweets = tweets.slice(0).filter(tweet =>{return !deletedTweets.includes(tweet.id)}) 
+    const json = JSON.stringify(cleanTweets);
     const filename = 'dril.json';
     const mimetype = 'application/json';
     res.setHeader('Content-Type', mimetype);

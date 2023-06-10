@@ -45,7 +45,6 @@ function defineUpdateRoutes(app){
 module.exports = async (app) => {
 
   try{
-
     await UpdateTweetsInDatabase()
     defineUpdateRoutes(app)
 
@@ -53,13 +52,11 @@ module.exports = async (app) => {
     console.error(error);
   }
 
-  
-
   const allTweets = await db.retrieveAllTweets()
   const deletedTweets = await db.retrieveAllDeletedTweets()
   
   // downloads incluem tweets deletados
-  require('./downloads/')(app, allTweets); 
+  require('./downloads/')(app, allTweets, deletedTweets); 
 
   // retorna apenas tweets que podem ser mostrados no app
   return allTweets.filter(tweet =>{return !deletedTweets.includes(tweet.id)}) 
