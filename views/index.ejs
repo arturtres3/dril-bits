@@ -26,7 +26,7 @@
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8" id="twitter-wjs"></script>
     
     <ul id="navbar">
-      <li> <a href="/About">About</a> </li>
+      <li> <a onclick="openAbout()">About</a> </li>
       <li> <a href="/Download">Download.txt</a> </li>
       <li class="right">
         <label class="switch">
@@ -64,6 +64,18 @@
       <a title="Enter" id="next" class="control">Another one</a>
       
     </ul>
+
+    <dialog class="about" id="about"> 
+      <button onclick="about.close()" class="closeModal">×</button>
+      <p>Get a random <a href="https://twitter.com/dril?s=20">@dril</a> tweet</p>
+      <p>Out of 10+ years and 10k+ posts, you can always find some hidden gems that may have slipped under the radar.</p>
+      <p>It includes retweets and replys too, so not every tweet was written by @dril</p>
+      <p>If you want all dril tweets in here as a neat JSON file with the text, the date and the id
+          for each tweet, you can get them on the following link. It looks like this:</p>
+      <p>{<br>&emsp;"text": "no",<br>&emsp;"id": "922321981",<br>&emsp;"date": "2008-09-15T13:25:20.000Z"<br>}</p>
+      <a href="/DownloadJSON">Download JSON</a> <br>
+      <a href="/DownloadDisplay">Download Display</a>
+    </dialog>
 
     <script defer src="history.js"></script>
     <script defer src="index.js"></script>

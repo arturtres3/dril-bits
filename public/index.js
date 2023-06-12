@@ -4,6 +4,7 @@ const container_display = document.getElementById('tweet-container-display')
 const container_next = document.getElementById('tweet-container-next')
 const container_previous = document.getElementById('tweet-container-previous')
 const dark_mode = document.getElementById("dark-mode");
+const about = document.getElementById("about");
 const root = document.querySelector(':root');
 
 let history = new History()
@@ -13,6 +14,8 @@ let tweets = []
 function currentId() {return container_display.dataset.tweetid}
 
 function randElem(list){return list[Math.ceil(Math.random() * list.length)]}
+
+function openAbout(){about.showModal()}
 
 function httpGet(theUrl)
 {
@@ -176,4 +179,8 @@ random.addEventListener('click', () => {
 })
 
 
-
+about.addEventListener('click', (e) => {
+    if (e.target === about) {
+        about.close();
+    }
+  });

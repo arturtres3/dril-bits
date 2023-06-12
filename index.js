@@ -10,10 +10,6 @@ const app = express();
   app.get('/', (req, res) => {
     res.render('index.ejs', {tweet: randTweet(), tweet2: randTweet()});
   });
-  
-  app.get('/About', (req, res) => {
-    res.render('about.ejs');
-  });
 
   app.get('/next', (req, res) => {
     res.send(randTweet());
